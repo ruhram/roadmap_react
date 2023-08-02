@@ -1,17 +1,39 @@
-export default function TodoList() {
+import { useState } from "react";
+import { sculptureList } from "./data";
+
+export default function Gallery(){
+  const [index, setIndex] = useState(0);
+  const [showMore, setShowMore] = useState(false);
+
+  function handleNextClick() {
+    setIndex(index + 1);
+  }
+
+  function handleMoreClick(){
+    setShowMore(!showMore);
+  }
+
+  let sculpture = sculptureList[index];
   return (
     <>
-      <h1>Hedy Lamarr's Todos</h1>
+      <button onClick={handleNextClick}>
+        Next
+      </button>
+      <h2>
+        <i>{sculpture.name}</i>
+        by {sculpture.artist}
+      </h2>
+      <h3>
+        ({index + 1} of {sculptureList.length})
+      </h3>
+      <button onClick={handleMoreClick}>
+        {showMore ? 'Hide' : 'Show'} details
+      </button>
+        {showMore && <p>{sculpture.description}</p>}
       <img 
-        src="https://i.imgur.com/yXOvdOSs.jpg" 
-        alt="Hedy Lamarr"
-        className='photo'
+        src={sculpture.url} 
+        alt={sculpture.alt}
       />
-      <ul>
-        <li>Invent new traffic lights</li>
-        <li>Rehearse a movie scene</li>
-        <li>Improve the spectrum technology</li>
-      </ul>
     </>
-  );
+  )
 }
